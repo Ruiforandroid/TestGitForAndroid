@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/game" android:title="今日天气" android:icon="@drawable/ic_baseline_cloud_24"/>
+    <item android:id="@+id/blank" android:title="备忘日历" android:icon="@drawable/ic_baseline_date_range_24"/>
+    <item android:id="@+id/share" android:title="个人信息" android:icon="@drawable/ic_baseline_person_24"/>
+</menu>

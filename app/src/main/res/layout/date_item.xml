@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+
+    <com.example.androidexamproject.date.CardButton
+        android:id="@+id/cardButton"
+        android:layout_width="match_parent"
+        android:layout_height="619dp"
+        android:text="19 晴 您今天有课"
+        android:textSize="16sp" />
+</LinearLayout>
