@@ -26,7 +26,7 @@ class DateG():Serializable {
     }
 
     fun ischoose(){
-
+        Log.d("test","GitTest")
     }
 
 
