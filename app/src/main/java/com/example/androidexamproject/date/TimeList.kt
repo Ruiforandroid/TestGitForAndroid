@@ -48,6 +48,6 @@ class TimeList() {
                 else -> 7
             }
     }
-    
+
 
 }

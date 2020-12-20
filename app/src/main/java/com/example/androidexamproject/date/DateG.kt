@@ -15,7 +15,7 @@ class DateG():Serializable {
         dates = deck.daterandom
     }
 
-    fun chooseCard(index:Int) {
+    fun chooseCard(index:Int){
         val card = dates.get(index)
         for (i in 0..29){
             dates[i].ischoose=false
@@ -25,7 +25,9 @@ class DateG():Serializable {
         Log.d("ischoose",card.ischoose.toString())
     }
 
+    fun ischoose(){
 
+    }
 
 
 }
