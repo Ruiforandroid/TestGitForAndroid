@@ -13,19 +13,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.androidexamproject.weather.Weather
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_cloud.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+const val cloudURL = "http://t.weather.itboy.net/api/weather/city/"
+
 
 class CloudFragment : Fragment() {
-
-    private var param1: String? = null
-    private var param2: String? = null
 
     lateinit var adapter: MyRecyclerViewAdapter
     lateinit var db: SQLiteDatabase
@@ -43,18 +43,48 @@ class CloudFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val openSqLiteHelper = this.context?.let { MyOpenSqLiteHelper(it,2 ) }
+        val openSqLiteHelper = this.context?.let { MyOpenSqLiteHelper(it, 8)}
         if (openSqLiteHelper != null) {
             db = openSqLiteHelper.writableDatabase
         }
-        cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
+        var cursor2 = db.query(TABLE_NAME_AREA, null, null, null, null, null, null)
+        if (!cursor2.moveToFirst()){
+            val cityname = "北京"
+            val citycode = "101010100"
+            val province = "北京"
+            val contentValues = ContentValues().apply {
+                put("cityname",cityname)
+                put("citycode",citycode)
+                put("province",province)
+            }
+            db.insert(TABLE_NAME_AREA,null,contentValues)
+        }
+        cursor2.moveToFirst()
+        Log.d("Cloud","成功一半")
+        val queue = Volley.newRequestQueue(this.context)
+        textView_province.text = cursor2.getString(cursor2.getColumnIndex("province")).toString()
+        textView_didian.text = cursor2.getString(cursor2.getColumnIndex("cityname")).toString()
+        val citycode = cursor2.getString(cursor2.getColumnIndex("citycode")).toString()
+        val url = (cloudURL+citycode).toString()
+        val stringRequest = StringRequest(url,{
+            val gson = Gson()
+            val WeatherType = object :TypeToken<Weather>(){}.type
+            val weather = gson.fromJson<Weather>(it,WeatherType)
+            textView_shidu.text = "湿度:" + weather.data.shidu
+            textView_tianqi.text = weather.data.forecast[0].type+"℃"
+            textView_wendu.text = weather.data.wendu
+            Log.d("Cloud","成功")
+        },{
+            Log.d("Cloud","失败")
+        })
+        queue.add(stringRequest)
 
+        cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
         adapter = MyRecyclerViewAdapter(cursor)
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = layoutManager
-
         if (!cursor.moveToFirst()) {
             val str = readFileFromRaw(R.raw.citycodepri)
             val gson = Gson()
@@ -73,7 +103,6 @@ class CloudFragment : Fragment() {
                 reloadAllData()
             }
         }
-
     }
 
     fun reloadAllData() {
@@ -136,11 +165,13 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         cursor.moveToPosition(position)
-
         holder.textView_cityname.text = cursor.getString(cursor.getColumnIndex("cityname"))
         holder.textView_citycode.text = cursor.getString(cursor.getColumnIndex("citycode"))
     }
+
     override fun getItemCount(): Int {
         return cursor.count
     }
+
+
 }

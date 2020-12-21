@@ -26,9 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginStart="33dp"
-                android:layout_marginTop="58dp"
-                android:layout_marginEnd="103dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="30dp"
                 android:shadowColor="#BC0E0E"
                 android:text="37℃"
                 android:textColor="#E33333"
@@ -38,47 +37,59 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/textView_province"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="50dp"
+                android:text="北京"
+                app:layout_constraintEnd_toStartOf="@+id/textView_didian"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_wendu" />
+
+            <TextView
                 android:id="@+id/textView_didian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="26dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
                 android:text="北京"
                 android:textSize="28sp"
-                app:layout_constraintStart_toStartOf="@+id/textView_wendu"
+                app:layout_constraintEnd_toStartOf="@+id/textView_beiwang"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_wendu" />
 
             <TextView
                 android:id="@+id/textView_tianqi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
                 android:text="天气：晴"
                 android:textSize="20sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView_shidu"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_province" />
 
             <TextView
                 android:id="@+id/textView_shidu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="41dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="160dp"
                 android:text="湿度：86"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView_tianqi"
-                app:layout_constraintTop_toBottomOf="@+id/textView_didian" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_province" />
 
             <TextView
                 android:id="@+id/textView_beiwang"
-                android:layout_width="0dp"
-                android:layout_height="198dp"
-                android:layout_marginTop="45dp"
-                android:layout_marginEnd="15dp"
+                android:layout_width="128dp"
+                android:layout_height="181dp"
+                android:layout_marginEnd="20dp"
                 android:text="距离您最近的待办事项为XXXXXXXXX，请注意截止时间嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView_wendu"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/textView_wendu" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
