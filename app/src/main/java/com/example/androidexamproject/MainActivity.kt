@@ -1,7 +1,12 @@
 package com.example.androidexamproject
 
+import android.app.ListActivity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -35,6 +40,24 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.righttopmenu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent= Intent(this, MainActivity_add_area::class.java)
+        when(item.itemId){
+            R.id.add_area -> {Log.d("menu","add被点击")
+            startActivity(intent)}
+            R.id.del_area -> Log.d("menu","del被点击")
+
+        }
+
+
+        return super.onOptionsItemSelected(item)
     }
 
 

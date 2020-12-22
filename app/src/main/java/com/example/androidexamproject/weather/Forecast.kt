@@ -14,6 +14,6 @@ data class Forecast(
     val ymd: String
 ){
     override fun toString(): String {
-        return "$week: $low-$high $type"
+        return "$date 号: $week 白天: $low---$high  $type"
     }
 }

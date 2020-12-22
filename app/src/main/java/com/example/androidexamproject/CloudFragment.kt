@@ -5,16 +5,12 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.ArrayAdapter
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.androidexamproject.weather.Forecast
 import com.example.androidexamproject.weather.Weather
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -62,7 +58,7 @@ class CloudFragment : Fragment() {
         cursor2.moveToFirst()
         Log.d("Cloud","成功一半")
         val queue = Volley.newRequestQueue(this.context)
-        textView_province.text = cursor2.getString(cursor2.getColumnIndex("province")).toString()
+        textView_add_province.text = cursor2.getString(cursor2.getColumnIndex("province")).toString()
         textView_didian.text = cursor2.getString(cursor2.getColumnIndex("cityname")).toString()
         val citycode = cursor2.getString(cursor2.getColumnIndex("citycode")).toString()
         val url = (cloudURL+citycode).toString()
@@ -71,38 +67,16 @@ class CloudFragment : Fragment() {
             val WeatherType = object :TypeToken<Weather>(){}.type
             val weather = gson.fromJson<Weather>(it,WeatherType)
             textView_shidu.text = "湿度:" + weather.data.shidu
-            textView_tianqi.text = weather.data.forecast[0].type+"℃"
-            textView_wendu.text = weather.data.wendu
+            textView_tianqi.text = weather.data.forecast[0].type
+            textView_wendu.text = weather.data.wendu+"℃"
             Log.d("Cloud","成功")
+            val adapter2 = this.context?.let { it1 -> ArrayAdapter<Forecast>(it1,android.R.layout.simple_list_item_1,weather.data.forecast) }
+            listView.adapter = adapter2
         },{
             Log.d("Cloud","失败")
         })
         queue.add(stringRequest)
 
-        cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
-        adapter = MyRecyclerViewAdapter(cursor)
-        recyclerView.adapter = adapter
-        val layoutManager = LinearLayoutManager(this.context)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerView.layoutManager = layoutManager
-        if (!cursor.moveToFirst()) {
-            val str = readFileFromRaw(R.raw.citycodepri)
-            val gson = Gson()
-            val CityType = object : TypeToken<List<City>>() {}.type   //List<City>还是City
-            var cities: List<City> = gson.fromJson(str, CityType)
-            var i = 0
-            while (cities[i].city_name != "") {
-                val cityname = cities[i].city_name
-                val citycode = cities[i].city_code
-                val contentValues = ContentValues().apply {
-                    put("citycode", citycode)
-                    put("cityname", cityname)
-                }
-                i++
-                db.insert(TABLE_NAME, null, contentValues)
-                reloadAllData()
-            }
-        }
     }
 
     fun reloadAllData() {
@@ -128,50 +102,3 @@ class CloudFragment : Fragment() {
 
 }
 
-class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
-    fun swapCursor(newCursor: Cursor) {
-        if (cursor == newCursor) return
-        cursor.close()
-        cursor = newCursor
-        notifyDataSetChanged()
-    }
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView_cityname: TextView
-        val textView_citycode: TextView
-
-        init {
-            textView_cityname = view.findViewById(R.id.textView_cityame)
-            textView_citycode = view.findViewById(R.id.textView_citycode)
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.person_layout, parent, false)
-        //以下实现点击事件
-        val viewHolder = ViewHolder(view)
-        viewHolder.textView_cityname.setOnClickListener {
-            val position = viewHolder.textView_citycode.text.toString()
-            Toast.makeText(parent.context, "you click this $position", Toast.LENGTH_SHORT).show()
-        }
-        viewHolder.textView_citycode.setOnClickListener {
-            val position = viewHolder.textView_citycode.text.toString()
-            Log.d("position", "$position")
-            Toast.makeText(parent.context, "you click this $position", Toast.LENGTH_SHORT).show()
-        }
-        return ViewHolder(view)
-    }
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        cursor.moveToPosition(position)
-        holder.textView_cityname.text = cursor.getString(cursor.getColumnIndex("cityname"))
-        holder.textView_citycode.text = cursor.getString(cursor.getColumnIndex("citycode"))
-    }
-
-    override fun getItemCount(): Int {
-        return cursor.count
-    }
-
-
-}
