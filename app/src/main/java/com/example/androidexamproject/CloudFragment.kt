@@ -39,7 +39,7 @@ class CloudFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val openSqLiteHelper = this.context?.let { MyOpenSqLiteHelper(it, 8)}
+        val openSqLiteHelper = this.context?.let { MyOpenSqLiteHelper(it, 9)}
         if (openSqLiteHelper != null) {
             db = openSqLiteHelper.writableDatabase
         }

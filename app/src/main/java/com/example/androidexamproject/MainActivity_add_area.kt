@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main_add_area.*
+import kotlinx.android.synthetic.main.activity_main_add_area.view.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.Exception
+import kotlin.concurrent.thread
 
 
 lateinit var adapter: MyRecyclerViewAdapter
@@ -30,13 +32,14 @@ var add_shi = ""
 var add_city = ""
 var add_code = ""
 var count = 0
+var issuccess = true
 
 class MainActivity_add_area : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_add_area)
 
-        val openSqLiteHelper = this?.let { MyOpenSqLiteHelper(it, 8) }
+        val openSqLiteHelper = this?.let { MyOpenSqLiteHelper(it, 9) }
         if (openSqLiteHelper != null) {
             db = openSqLiteHelper.writableDatabase
         }
@@ -65,14 +68,15 @@ class MainActivity_add_area : AppCompatActivity() {
                 reloadAllData(cursor)
             }
         }
-        var cursor3 = db.query(TABLE_NAME_CITY,null, null, null, null, null, null)
-        if (add_pro!=""){
-            if (add_code.length>6){
+
+        cursor = db.query(TABLE_NAME_CITY, null, null, null, null, null, null)
+        if (add_pro != "") {
+            if (add_code.length > 6) {
                 textView_add_province.text = add_pro
                 textView_add_shi.text = add_pro
                 textView_add_city.text = add_pro
-            }else{
-                if (!cursor3.moveToFirst()){
+            } else {
+                if (!cursor.moveToFirst()) {
                     val str = readFileFromRaw(R.raw.citycode)
                     val gson = Gson()
                     val CityType = object : TypeToken<List<City>>() {}.type   //List<City>还是City
@@ -89,27 +93,87 @@ class MainActivity_add_area : AppCompatActivity() {
                         db.insert(TABLE_NAME_CITY, null, contentValues)
                     }
                 }
-                cursor3 = db.query(TABLE_NAME_CITY,null,"citycode like '$add_code%'",null,null,null,null)
-                reloadAllData(cursor3)
+                cursor = db.query(TABLE_NAME_CITY, null, "citycode like '$add_code%'", null, null, null, null)
+                reloadAllData(cursor)
                 textView_add_province.text = add_pro
             }
         }
-        if (add_shi!=""){
-            cursor3 = db.query(TABLE_NAME_CITY,null,"citycode like '$add_shi%'",null,null,null,null)
-            reloadAllData(cursor3)
+        if (add_shi != "") {
+            cursor = db.query(TABLE_NAME_CITY, null, "citycode like '$add_shi%'", null, null, null, null
+            )
+            reloadAllData(cursor)
             textView_add_shi.text = add_shi
         }
-        if (add_city!=""){
+        if (add_city != "") {
             textView_add_city.text = add_city
         }
+
+
+
+
         button_add.setOnClickListener{
-            val values = ContentValues().apply {
-                put("cityname", add_city)
-                put("citycode", add_code)
-                put("province", add_pro)
+            textView_add_province.text = add_pro
+            textView_add_shi.text = add_shi
+            textView_add_city.text = add_city
+
+            cursor = db.query(TABLE_NAME_CITY, null, null, null, null, null, null)
+            if (add_pro != "") {
+                if (add_code.length > 6 && issuccess) {
+                    textView_add_province.text = add_pro
+                    textView_add_shi.text = add_pro
+                    textView_add_city.text = add_pro
+                } else {
+                    if (!cursor.moveToFirst()) {
+                        val str = readFileFromRaw(R.raw.citycode)
+                        val gson = Gson()
+                        val CityType = object : TypeToken<List<City>>() {}.type   //List<City>还是City
+                        var cities: List<City> = gson.fromJson(str, CityType)
+                        var i = 0
+                        while (cities[i].city_name != "") {
+                            val cityname = cities[i].city_name
+                            val citycode = cities[i].city_code
+                            val contentValues = ContentValues().apply {
+                                put("citycode", citycode)
+                                put("cityname", cityname)
+                            }
+                            i++
+                            db.insert(TABLE_NAME_CITY, null, contentValues)
+                        }
+                    }
+                    cursor = db.query(TABLE_NAME_CITY, null, "citycode like '$add_code%01'", null, null, null, null)
+                    reloadAllData(cursor)
+                    textView_add_province.text = add_pro
+                    issuccess = false
+                }
             }
-            db.insert(TABLE_NAME_AREA,null,values)
+            Log.d("cityinfo","$add_shi")
+            if (add_shi != "") {
+                add_code = add_code.substring(0,7)
+                Log.d("cityinfo","$add_code")
+                cursor = db.query(TABLE_NAME_CITY, null, "citycode like '$add_code%'", null, null, null, null)
+                reloadAllData(cursor)
+                textView_add_shi.text = add_shi
+
+            }
+            if (add_city != "") {
+                textView_add_city.text = add_city
+            }
         }
+
+        button_sure.setOnClickListener {
+            if (add_city!=""){
+                val values = ContentValues().apply {
+                    put("cityname", add_city)
+                    put("citycode", add_code)
+                    put("province", add_pro)
+                }
+                db.insert(TABLE_NAME_AREA,null,values)
+            }else{
+                Toast.makeText(this, "还有部分信息没选择哟！！！", Toast.LENGTH_LONG).show()
+            }
+
+        }
+
         button_quxiao.setOnClickListener{
             add_pro = ""
             add_shi = ""
@@ -140,6 +204,10 @@ class MainActivity_add_area : AppCompatActivity() {
         return ""
     }
 
+    public fun changeview(text:String){
+        textView_add_province.text = text
+    }
+
 }
 class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
     fun swapCursor(newCursor: Cursor) {
@@ -167,14 +235,16 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
         val viewHolder = ViewHolder(view)
         viewHolder.textView_cityname.setOnClickListener {
             val position = viewHolder.textView_citycode.text.toString()
-            Toast.makeText(parent.context, "you click this $position", Toast.LENGTH_SHORT).show()
+            Toast.makeText(parent.context, "you click this $position", Toast.LENGTH_LONG).show()
 
             if (count == 0){
                 add_pro = viewHolder.textView_cityname.text.toString()
                 add_code = viewHolder.textView_citycode.text.toString()
+                Log.d("citychoose","成功选择省份")
             }else if (count==1){
                 add_shi = viewHolder.textView_cityname.text.toString()
                 add_code = viewHolder.textView_citycode.text.toString()
+                Log.d("citychoose","成功选择市")
             }else{
                 add_city = viewHolder.textView_cityname.text.toString()
                 add_code = viewHolder.textView_citycode.text.toString()
