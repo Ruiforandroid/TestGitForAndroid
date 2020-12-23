@@ -1,6 +1,7 @@
 package com.example.androidexamproject
 
 import android.content.ContentValues
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.androidexamproject.weather.Forecast
@@ -17,6 +19,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_cloud.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import kotlin.math.log
 
 const val cloudURL = "http://t.weather.itboy.net/api/weather/city/"
 
@@ -26,6 +29,7 @@ class CloudFragment : Fragment() {
     lateinit var adapter: MyRecyclerViewAdapter
     lateinit var db: SQLiteDatabase
     lateinit var cursor: Cursor
+    lateinit var citycode_diqu:String
 
 
     override fun onCreateView(
@@ -77,27 +81,45 @@ class CloudFragment : Fragment() {
         })
         queue.add(stringRequest)
 
-    }
+        textView_didian.setOnClickListener{
+            Log.d("didian","可以触发")
+            val intent = Intent(activity,MainActivitySelectArea::class.java)
+            startActivityForResult(intent,2)
 
-    fun reloadAllData() {
-        cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
-        adapter.swapCursor(cursor)
-    }
-
-    fun readFileFromRaw(rawName: Int): String? {
-        try {
-            val inputReader = InputStreamReader(resources.openRawResource(rawName))
-            val bufReader = BufferedReader(inputReader)
-            var line: String? = ""
-            var result: String? = ""
-            while (bufReader.readLine().also({ line = it }) != null) {
-                result += line
-            }
-            return result
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
-        return ""
+
+    }
+
+//    fun reloadAllData() {
+//        cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
+//        adapter.swapCursor(cursor)
+//    }
+//
+//    fun readFileFromRaw(rawName: Int): String? {
+//        try {
+//            val inputReader = InputStreamReader(resources.openRawResource(rawName))
+//            val bufReader = BufferedReader(inputReader)
+//            var line: String? = ""
+//            var result: String? = ""
+//            while (bufReader.readLine().also({ line = it }) != null) {
+//                result += line
+//            }
+//            return result
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//        return ""
+//    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==2){
+            if (resultCode==1) {
+                citycode_diqu = data?.getStringExtra("CITYCODE").toString()
+                textView_beiwang.text = citycode_diqu
+                Log.d("diqucode", "$citycode_diqu")
+            }
+        }
     }
 
 }
