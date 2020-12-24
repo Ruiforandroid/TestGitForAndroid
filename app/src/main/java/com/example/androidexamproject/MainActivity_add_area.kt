@@ -1,7 +1,6 @@
 package com.example.androidexamproject
 
 import android.content.ContentValues
-import android.content.res.Resources
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main_add_area.*
-import kotlinx.android.synthetic.main.activity_main_add_area.view.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.Exception
-import kotlin.concurrent.thread
 
 
 lateinit var adapter: MyRecyclerViewAdapter
@@ -40,7 +37,7 @@ class MainActivity_add_area : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_add_area)
 
-        val openSqLiteHelper = this?.let { MyOpenSqLiteHelper(it, 9) }
+        val openSqLiteHelper = this?.let { MyOpenSqLiteHelper(it, 10) }
         if (openSqLiteHelper != null) {
             db = openSqLiteHelper.writableDatabase
         }
@@ -112,7 +109,7 @@ class MainActivity_add_area : AppCompatActivity() {
 
 
 
-        button_add.setOnClickListener{
+        button_add_beiwang.setOnClickListener{
             textView_add_province.text = add_pro
             textView_add_shi.text = add_shi
             textView_add_city.text = add_city

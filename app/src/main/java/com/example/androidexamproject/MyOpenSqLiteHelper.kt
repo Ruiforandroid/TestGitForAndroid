@@ -3,9 +3,7 @@ package com.example.androidexamproject
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.os.Parcelable
 import android.util.Log
-import android.widget.Toast
 
 const val DB_NAME = "examdb5.db"
 const val TABLE_NAME = "exam5city"

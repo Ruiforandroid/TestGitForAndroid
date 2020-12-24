@@ -19,7 +19,7 @@ class MainActivitySelectArea : AppCompatActivity() {
 
         val data = mutableListOf<String>()
         val info = mutableListOf<diqu>()
-        val openSqLiteHelper = this?.let { MyOpenSqLiteHelper(it, 9) }
+        val openSqLiteHelper = this?.let { MyOpenSqLiteHelper(it, 10) }
         if (openSqLiteHelper != null) {
             db = openSqLiteHelper.writableDatabase
         }

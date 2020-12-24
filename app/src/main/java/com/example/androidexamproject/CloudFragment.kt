@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.androidexamproject.weather.Forecast
@@ -17,10 +16,6 @@ import com.example.androidexamproject.weather.Weather
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_cloud.*
-import kotlinx.android.synthetic.main.person_layout.*
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import kotlin.math.log
 
 const val cloudURL = "http://t.weather.itboy.net/api/weather/city/"
 var today = 24
@@ -47,7 +42,7 @@ class CloudFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val openSqLiteHelper = this.context?.let { MyOpenSqLiteHelper(it, 9)}
+        val openSqLiteHelper = this.context?.let { MyOpenSqLiteHelper(it, 10)}
         if (openSqLiteHelper != null) {
             db = openSqLiteHelper.writableDatabase
         }

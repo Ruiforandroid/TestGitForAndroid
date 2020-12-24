@@ -1,16 +1,7 @@
 package com.example.androidexamproject.date
 
-import android.R
 import android.util.Log
-import android.widget.ArrayAdapter
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.androidexamproject.*
-import com.example.androidexamproject.weather.Forecast
-import com.example.androidexamproject.weather.Weather
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.fragment_cloud.*
 
 class TimeList() {
 
@@ -19,6 +10,7 @@ class TimeList() {
     val mouthsmall = arrayOf(4,6,9,11)
 
     init {
+
         Log.d("TimeList","被调用")
         val datelist = DateList(19,"备注",true)
         val mouth = thismouth
@@ -46,10 +38,11 @@ class TimeList() {
                         }else{
                             (num+i)%moutype
                         }
-                        daterandom.add(DateList(riqi,"您今天有课"))
+                        daterandom.add(DateList(riqi,""))
                         i++
                         }
                     daterandom[0].ischoose=true
+                    daterandom[0].istoday=true
                     }
                 "星期二" -> {
                     var num = thisday
@@ -60,10 +53,11 @@ class TimeList() {
                         }else{
                             (num+i)%moutype
                         }
-                        daterandom.add(DateList(riqi,"您今天有课"))
+                        daterandom.add(DateList(riqi,""))
                         i++
                     }
                     daterandom[1].ischoose=true
+                    daterandom[1].istoday=true
                 }
                 "星期三" -> {
                     var num = thisday
@@ -75,10 +69,11 @@ class TimeList() {
                         }else{
                             (num+i)%moutype
                         }
-                        daterandom.add(DateList(riqi,"您今天有课"))
+                        daterandom.add(DateList(riqi,""))
                         i++
                     }
                     daterandom[2].ischoose=true
+                    daterandom[2].istoday=true
                 }
                 "星期四" -> {
                     var num = thisday
@@ -91,10 +86,11 @@ class TimeList() {
                         }else{
                             (num+i)%moutype
                         }
-                        daterandom.add(DateList(riqi,"您今天有课"))
+                        daterandom.add(DateList(riqi,""))
                         i++
                     }
                     daterandom[3].ischoose=true
+                    daterandom[3].istoday=true
                 }
                 "星期五" -> {
                     var num = thisday
@@ -108,10 +104,11 @@ class TimeList() {
                         }else{
                             (num+i)%moutype
                         }
-                        daterandom.add(DateList(riqi,"您今天有课"))
+                        daterandom.add(DateList(riqi,""))
                         i++
                     }
                     daterandom[4].ischoose=true
+                    daterandom[4].istoday=true
                 }
                 "星期六" -> {
                     var num = thisday
@@ -126,10 +123,11 @@ class TimeList() {
                         }else{
                             (num+i)%moutype
                         }
-                        daterandom.add(DateList(riqi,"您今天有课"))
+                        daterandom.add(DateList(riqi,""))
                         i++
                     }
                     daterandom[5].ischoose=true
+                    daterandom[5].istoday=true
                 }
                 else -> {
                     var num = thisday
@@ -145,10 +143,11 @@ class TimeList() {
                         }else{
                             (num+i)%moutype
                         }
-                        daterandom.add(DateList(riqi,"您今天有课"))
+                        daterandom.add(DateList(riqi,""))
                         i++
                     }
                     daterandom[6].ischoose=true
+                    daterandom[6].istoday=true
                 }
             }
     }
