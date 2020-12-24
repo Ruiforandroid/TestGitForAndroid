@@ -11,6 +11,7 @@ const val DB_NAME = "examdb5.db"
 const val TABLE_NAME = "exam5city"
 const val TABLE_NAME_AREA = "examarea5"
 const val TABLE_NAME_CITY = "examallcity"
+const val TABLE_NAME_BEIWANG = "beiwang"
 
 
 class MyOpenSqLiteHelper(context: Context, version:Int):SQLiteOpenHelper(context, DB_NAME,null,version) {
@@ -19,6 +20,7 @@ class MyOpenSqLiteHelper(context: Context, version:Int):SQLiteOpenHelper(context
         db?.execSQL("create table $TABLE_NAME(_id integer primary key autoincrement, citycode text, cityname text)")
         db?.execSQL("create table $TABLE_NAME_AREA(_id integer primary key autoincrement,cityname text, citycode text, province text)")
         db?.execSQL("create table $TABLE_NAME_CITY(_id integer primary key autoincrement, citycode text, cityname text)")
+        db?.execSQL("create table $TABLE_NAME_BEIWANG(_id integer primary key autoincrement, date Int, beiwang text)")
         Log.d("database","创建成功")
     }
 
@@ -26,6 +28,7 @@ class MyOpenSqLiteHelper(context: Context, version:Int):SQLiteOpenHelper(context
         db?.execSQL("drop table if exists $TABLE_NAME")
         db?.execSQL("drop table if exists $TABLE_NAME_AREA")
         db?.execSQL("drop table if exists $TABLE_NAME_CITY")
+        db?.execSQL("drop table if exists $TABLE_NAME_BEIWANG")
         onCreate(db)
         Log.d("database","更新成功")
     }

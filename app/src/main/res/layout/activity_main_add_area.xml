@@ -16,21 +16,21 @@
             android:id="@+id/textView_add_province"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="省：北京"
+            android:text="省："
             android:textSize="24dp" />
 
         <TextView
             android:id="@+id/textView_add_shi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="市：北京"
+            android:text="市："
             android:textSize="24dp" />
 
         <TextView
             android:id="@+id/textView_add_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="城市：北京"
+            android:text="城市："
             android:textSize="24dp" />
 
         <TextView

@@ -33,6 +33,7 @@ var add_city = ""
 var add_code = ""
 var count = 0
 var issuccess = true
+lateinit var add_city_code :String
 
 class MainActivity_add_area : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,14 +158,16 @@ class MainActivity_add_area : AppCompatActivity() {
             }
             if (add_city != "") {
                 textView_add_city.text = add_city
+
             }
         }
 
         button_sure.setOnClickListener {
+            Log.d("add_info_citycode", add_code)
             if (add_city!=""){
                 val values = ContentValues().apply {
                     put("cityname", add_city)
-                    put("citycode", add_code)
+                    put("citycode", add_city_code)
                     put("province", add_pro)
                 }
                 db.insert(TABLE_NAME_AREA,null,values)
@@ -248,6 +251,9 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
             }else{
                 add_city = viewHolder.textView_cityname.text.toString()
                 add_code = viewHolder.textView_citycode.text.toString()
+                add_city_code = add_code
+                Log.d("add_info_citycode", add_code)
+
             }
             count++
 

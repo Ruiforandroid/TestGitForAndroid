@@ -45,7 +45,9 @@ class DateFragment : Fragment() {
         adapter.setOnCardClickListener {
             game.chooseCard(it)
             adapter.notifyDataSetChanged()
-            textView_dateinfo.text= game.dates[it].beiwang
+            editText_beiwang.hint = game.dates[it].beiwang
         }
+
+
     }
 }

@@ -4,6 +4,7 @@ package com.example.androidexamproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 
@@ -39,6 +40,8 @@ class MainActivitySelectArea : AppCompatActivity() {
             Toast.makeText(this,data.get(position),Toast.LENGTH_LONG).show()
             val intent = Intent()
             intent.putExtra("CITYCODE",info.get(position).city_code.toString())
+            intent.putExtra("PROVINCE",info.get(position).province.toString())
+            Log.d("Selectcitycode",info.get(position).city_code.toString())
             setResult(1,intent)
             finish()
         }

@@ -40,14 +40,14 @@ class DateCardAdapter(val Game:DateG):RecyclerView.Adapter<DateCardAdapter.ViewH
         holder.cardButton.isEnabled=!card.ischoose
         if (card.istoday){
             holder.cardButton.text = card.toString()
-            holder.cardButton.setBackgroundColor(Color.WHITE)
+            holder.cardButton.setBackgroundColor(Color.BLUE)
         }else if (card.ischoose){
             holder.cardButton.text = card.toString()
             holder.cardButton.setBackgroundColor(Color.GREEN)
         }
         else{
             holder.cardButton.text = card.toString()
-            holder.cardButton.setBackgroundColor(Color.GRAY)
+            holder.cardButton.setBackgroundColor(Color.WHITE)
         }
         holder.cardButton.setOnClickListener{
             mOnclickListenLiser?.invoke(position)

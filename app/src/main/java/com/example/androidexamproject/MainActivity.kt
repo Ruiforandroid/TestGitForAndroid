@@ -53,12 +53,11 @@ class MainActivity : AppCompatActivity() {
             R.id.add_area -> {Log.d("menu","add被点击")
             startActivity(intent)}
             R.id.del_area -> Log.d("menu","del被点击")
-
         }
-
-
         return super.onOptionsItemSelected(item)
     }
+
+
 
 
 }

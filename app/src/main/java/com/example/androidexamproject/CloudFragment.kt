@@ -17,12 +17,16 @@ import com.example.androidexamproject.weather.Weather
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_cloud.*
+import kotlinx.android.synthetic.main.person_layout.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import kotlin.math.log
 
 const val cloudURL = "http://t.weather.itboy.net/api/weather/city/"
-
+var today = 24
+var thismouth = 12
+lateinit var thisweek:String
+var thisyear = 2020
 
 class CloudFragment : Fragment() {
 
@@ -71,6 +75,10 @@ class CloudFragment : Fragment() {
             val WeatherType = object :TypeToken<Weather>(){}.type
             val weather = gson.fromJson<Weather>(it,WeatherType)
             textView_shidu.text = "湿度:" + weather.data.shidu
+            today = weather.data.forecast[0].date.toInt()
+            thisweek = weather.data.forecast[0].week
+            thismouth = weather.date.substring(4,6).toInt()
+            thisyear = weather.date.substring(0,4).toInt()
             textView_tianqi.text = weather.data.forecast[0].type
             textView_wendu.text = weather.data.wendu+"℃"
             Log.d("Cloud","成功")
@@ -89,6 +97,38 @@ class CloudFragment : Fragment() {
         }
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==2){
+            if (resultCode==1) {
+                //切换城市
+                val queue2 = Volley.newRequestQueue(this.context)
+                citycode_diqu = data?.getStringExtra("CITYCODE").toString()
+                val Province_diqu = data?.getStringExtra("PROVINCE").toString()
+                Log.d("GetFromSelect","$citycode_diqu")
+                val url = (cloudURL+citycode_diqu).toString()
+                val stringRequest2 = StringRequest(url,{
+                    val gson = Gson()
+                    val WeatherType = object :TypeToken<Weather>(){}.type
+                    val weather = gson.fromJson<Weather>(it,WeatherType)
+                    textView_didian.text = weather.cityInfo.city.toString()
+                    textView_add_province.text = Province_diqu
+                    textView_shidu.text = "湿度:" + weather.data.shidu
+                    textView_tianqi.text = weather.data.forecast[0].type
+                    textView_wendu.text = weather.data.wendu+"℃"
+                    Log.d("Cloud","成功")
+                    val adapter2 = this.context?.let { it1 -> ArrayAdapter<Forecast>(it1,android.R.layout.simple_list_item_1,weather.data.forecast) }
+                    listView.adapter = adapter2
+                },{
+                    Log.d("Cloud","失败")
+                })
+                queue2.add(stringRequest2)
+            }
+        }
+    }
+
+}
 
 //    fun reloadAllData() {
 //        cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
@@ -110,17 +150,4 @@ class CloudFragment : Fragment() {
 //        }
 //        return ""
 //    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode==2){
-            if (resultCode==1) {
-                citycode_diqu = data?.getStringExtra("CITYCODE").toString()
-                textView_beiwang.text = citycode_diqu
-                Log.d("diqucode", "$citycode_diqu")
-            }
-        }
-    }
-
-}
 
