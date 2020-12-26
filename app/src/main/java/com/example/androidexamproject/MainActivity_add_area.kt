@@ -168,10 +168,15 @@ class MainActivity_add_area : AppCompatActivity() {
                     put("province", add_pro)
                 }
                 db.insert(TABLE_NAME_AREA,null,values)
+                add_pro = ""
+                add_shi = ""
+                add_city = ""
+                add_code = ""
+                count = 0
             }else{
                 Toast.makeText(this, "还有部分信息没选择哟！！！", Toast.LENGTH_LONG).show()
             }
-
+            finish()
         }
 
         button_quxiao.setOnClickListener{
@@ -250,7 +255,6 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
                 add_code = viewHolder.textView_citycode.text.toString()
                 add_city_code = add_code
                 Log.d("add_info_citycode", add_code)
-
             }
             count++
 

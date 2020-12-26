@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -15,6 +16,7 @@ import com.example.androidexamproject.weather.Forecast
 import com.example.androidexamproject.weather.Weather
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_main_change_default.*
 import kotlinx.android.synthetic.main.fragment_cloud.*
 
 const val cloudURL = "http://t.weather.itboy.net/api/weather/city/"
@@ -82,9 +84,12 @@ class CloudFragment : Fragment() {
                 "小雪" -> linerLayout.setBackgroundResource(R.drawable.snow)
                 "中雪" ->linerLayout.setBackgroundResource(R.drawable.snow)
                 "大雪" -> linerLayout.setBackgroundResource(R.drawable.snow)
-                "小雨" -> linerLayout.setBackgroundResource(R.drawable.rain)
-                "中雨" -> linerLayout.setBackgroundResource(R.drawable.rain)
-                "大雨" -> linerLayout.setBackgroundResource(R.drawable.rain)
+                "小雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)
+                    changecolor()}
+                "中雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)
+                    changecolor()}
+                "大雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)
+                    changecolor()}
                 else -> linerLayout.setBackgroundResource(R.drawable.wumai)
 
             }
@@ -103,9 +108,8 @@ class CloudFragment : Fragment() {
             days=days+1
             cursor4 = db.rawQuery("Select beiwang from $TABLE_NAME_BEIWANG where date=$days",null)
         }
-
-        lastbeiwang = cursor4.getString(cursor4.getColumnIndex("beiwang")).toString()
-        textView_beiwang.text = lastbeiwang
+        lastbeiwang=cursor4.getString(cursor4.getColumnIndex("beiwang")).toString()
+        textView_beiwang.text = "距离您最近的备忘事件为：   "+lastbeiwang
 
 
         textView_didian.setOnClickListener{
@@ -114,6 +118,8 @@ class CloudFragment : Fragment() {
             startActivityForResult(intent,2)
 
         }
+
+
 
     }
 
@@ -142,9 +148,12 @@ class CloudFragment : Fragment() {
                         "小雪" -> linerLayout.setBackgroundResource(R.drawable.snow)
                         "中雪" ->linerLayout.setBackgroundResource(R.drawable.snow)
                         "大雪" -> linerLayout.setBackgroundResource(R.drawable.snow)
-                        "小雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)}
-                        "中雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)}
-                        "大雨" -> {linerLayout.setBackgroundResource(R.drawable.rain) }
+                        "小雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)
+                            changecolor()}
+                        "中雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)
+                            changecolor()}
+                        "大雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)
+                            changecolor()}
                         else -> linerLayout.setBackgroundResource(R.drawable.wumai)
 
                     }
@@ -161,13 +170,15 @@ class CloudFragment : Fragment() {
         }
     }
 
-//    fun changecolor(){
-//        textView_tianqi.setTextColor((255))
-//        textView_beiwang.setTextColor(50)
-//        textView_add_province.setTextColor(100)
-//        textView_didian.setTextColor(150)
-//        textView_shidu.setTextColor(200)
-//    }
+    fun changecolor(){
+        textView_tianqi.setTextColor(Color.parseColor("#ffffff"))
+        textView_beiwang.setTextColor(Color.parseColor("#ffffff"))
+        textView_add_province.setTextColor(Color.parseColor("#ffffff"))
+        textView_didian.setTextColor(Color.parseColor("#ffffff"))
+        textView_shidu.setTextColor(Color.parseColor("#ffffff"))
+
+
+    }
 
 }
 

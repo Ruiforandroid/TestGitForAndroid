@@ -75,6 +75,7 @@ class DateFragment : Fragment() {
             }
             number = it
         }
+        LinearLayout_date.setBackgroundResource(R.drawable.time)
         button_add_beiwang.setOnClickListener {
             val chooseday = (thisyear.toString().substring(2,4)+ thismouth+chooseDay).toInt()
             val choosedaybeiwang = editText_beiwang.text.toString()

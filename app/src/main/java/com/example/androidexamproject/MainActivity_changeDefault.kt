@@ -24,6 +24,7 @@ class MainActivity_changeDefault : AppCompatActivity() {
         if (cursor.moveToFirst()){
             textView_nowDefault.text = cursor.getString(cursor.getColumnIndex("cityname"))
         }
+        cursor.moveToNext()
         while (cursor.moveToNext()){
             val cityname = cursor.getString(cursor.getColumnIndex("cityname"))
             val province = cursor.getString(cursor.getColumnIndex("province"))

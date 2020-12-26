@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="增加天气备选地区"
-            android:textSize="30dp" />
+            android:textSize="26dp" />
 
         <TextView
             android:id="@+id/textView_del"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="删除地区"
-            android:textSize="30dp" />
+            android:textSize="26dp" />
 
         <TextView
             android:id="@+id/textView_changeDefault"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="改变默认天气地区"
-            android:textSize="30dp" />
+            android:textSize="26dp" />
 
         <TextView
             android:id="@+id/textView_money"

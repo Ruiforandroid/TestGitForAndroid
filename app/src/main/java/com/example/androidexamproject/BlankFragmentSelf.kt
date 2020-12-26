@@ -43,6 +43,11 @@ class BlankFragmentSelf : Fragment() {
             startActivity(intent)
         }
 
+        textView_del.setOnClickListener {
+            val intent = Intent(activity,MainActivity_del::class.java)
+            startActivity(intent)
+        }
+
     }
 
 }

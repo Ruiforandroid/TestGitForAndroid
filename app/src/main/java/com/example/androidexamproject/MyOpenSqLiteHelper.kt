@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
 const val DB_NAME = "examdb5.db"
-const val TABLE_NAME = "exam5city"
-const val TABLE_NAME_AREA = "examarea5"
-const val TABLE_NAME_CITY = "examallcity"
-const val TABLE_NAME_BEIWANG = "beiwang"
+const val TABLE_NAME = "exam5cityall"
+const val TABLE_NAME_AREA = "examarea5all"
+const val TABLE_NAME_CITY = "examallcityall"
+const val TABLE_NAME_BEIWANG = "beiwangall"
 
 
 class MyOpenSqLiteHelper(context: Context, version:Int):SQLiteOpenHelper(context, DB_NAME,null,version) {

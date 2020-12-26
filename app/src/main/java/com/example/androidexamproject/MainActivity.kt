@@ -55,10 +55,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val intent= Intent(this, MainActivity_add_area::class.java)
+        val intentdel = Intent(this,MainActivity_del::class.java)
         when(item.itemId){
             R.id.add_area -> {Log.d("menu","add被点击")
             startActivity(intent)}
-            R.id.del_area -> Log.d("menu","del被点击")
+            R.id.del_area -> {Log.d("menu","del被点击")
+            startActivity(intentdel)}
         }
         return super.onOptionsItemSelected(item)
     }

@@ -24,6 +24,7 @@ class MainActivitySelectArea : AppCompatActivity() {
             db = openSqLiteHelper.writableDatabase
         }
         cursor = db.query(TABLE_NAME_AREA, null, null, null, null, null, null)
+        cursor.moveToNext()
         while (cursor.moveToNext()){
             val cityname = cursor.getString(cursor.getColumnIndex("cityname"))
             val province = cursor.getString(cursor.getColumnIndex("province"))

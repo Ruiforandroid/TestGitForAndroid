@@ -13,7 +13,6 @@
         android:id="@+id/linerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/sun"
         android:backgroundTintMode="src_in"
         android:baselineAligned="?android:attr/windowOverscan"
         android:orientation="vertical">
@@ -47,7 +46,6 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="50dp"
                 android:text="北京"
-                android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toStartOf="@+id/textView_didian"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_wendu" />
@@ -59,7 +57,6 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:text="北京"
-                android:textColor="#FFFFFF"
                 android:textSize="28sp"
                 app:layout_constraintEnd_toStartOf="@+id/textView_beiwang"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +70,6 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="50dp"
                 android:text="天气：晴"
-                android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +84,6 @@
                 android:layout_marginBottom="50dp"
                 android:shadowColor="@color/colorPrimaryDark"
                 android:text="湿度：86"
-                android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +104,8 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textFilterEnabled="false" />
 
     </LinearLayout>
 </FrameLayout>
