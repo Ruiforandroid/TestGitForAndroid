@@ -75,6 +75,19 @@ class CloudFragment : Fragment() {
             thismouth = weather.date.substring(4,6).toInt()
             thisyear = weather.date.substring(0,4).toInt()
             textView_tianqi.text = weather.data.forecast[0].type
+            when(weather.data.forecast[0].type){
+                "晴" -> linerLayout.setBackgroundResource(R.drawable.sun)
+                "阴" -> linerLayout.setBackgroundResource(R.drawable.yintian)
+                "多云" -> linerLayout.setBackgroundResource(R.drawable.cloud)
+                "小雪" -> linerLayout.setBackgroundResource(R.drawable.snow)
+                "中雪" ->linerLayout.setBackgroundResource(R.drawable.snow)
+                "大雪" -> linerLayout.setBackgroundResource(R.drawable.snow)
+                "小雨" -> linerLayout.setBackgroundResource(R.drawable.rain)
+                "中雨" -> linerLayout.setBackgroundResource(R.drawable.rain)
+                "大雨" -> linerLayout.setBackgroundResource(R.drawable.rain)
+                else -> linerLayout.setBackgroundResource(R.drawable.wumai)
+
+            }
             textView_wendu.text = weather.data.wendu+"℃"
             Log.d("Cloud","成功")
             val adapter2 = this.context?.let { it1 -> ArrayAdapter<Forecast>(it1,android.R.layout.simple_list_item_1,weather.data.forecast) }
@@ -83,6 +96,17 @@ class CloudFragment : Fragment() {
             Log.d("Cloud","失败")
         })
         queue.add(stringRequest)
+        var days = (thisyear.toString().substring(2,4)+ thismouth+ today.toString()).toInt()
+        var cursor4 = db.rawQuery("Select * from $TABLE_NAME_BEIWANG where date=$days",null)
+        var lastbeiwang=""
+        while (!cursor4.moveToFirst()){
+            days=days+1
+            cursor4 = db.rawQuery("Select beiwang from $TABLE_NAME_BEIWANG where date=$days",null)
+        }
+
+        lastbeiwang = cursor4.getString(cursor4.getColumnIndex("beiwang")).toString()
+        textView_beiwang.text = lastbeiwang
+
 
         textView_didian.setOnClickListener{
             Log.d("didian","可以触发")
@@ -111,6 +135,20 @@ class CloudFragment : Fragment() {
                     textView_add_province.text = Province_diqu
                     textView_shidu.text = "湿度:" + weather.data.shidu
                     textView_tianqi.text = weather.data.forecast[0].type
+                    when(weather.data.forecast[0].type){
+                        "晴" -> linerLayout.setBackgroundResource(R.drawable.sun)
+                        "阴" -> linerLayout.setBackgroundResource(R.drawable.yintian)
+                        "多云" -> linerLayout.setBackgroundResource(R.drawable.cloud)
+                        "小雪" -> linerLayout.setBackgroundResource(R.drawable.snow)
+                        "中雪" ->linerLayout.setBackgroundResource(R.drawable.snow)
+                        "大雪" -> linerLayout.setBackgroundResource(R.drawable.snow)
+                        "小雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)}
+                        "中雨" -> {linerLayout.setBackgroundResource(R.drawable.rain)}
+                        "大雨" -> {linerLayout.setBackgroundResource(R.drawable.rain) }
+                        else -> linerLayout.setBackgroundResource(R.drawable.wumai)
+
+                    }
+
                     textView_wendu.text = weather.data.wendu+"℃"
                     Log.d("Cloud","成功")
                     val adapter2 = this.context?.let { it1 -> ArrayAdapter<Forecast>(it1,android.R.layout.simple_list_item_1,weather.data.forecast) }
@@ -122,6 +160,14 @@ class CloudFragment : Fragment() {
             }
         }
     }
+
+//    fun changecolor(){
+//        textView_tianqi.setTextColor((255))
+//        textView_beiwang.setTextColor(50)
+//        textView_add_province.setTextColor(100)
+//        textView_didian.setTextColor(150)
+//        textView_shidu.setTextColor(200)
+//    }
 
 }
 

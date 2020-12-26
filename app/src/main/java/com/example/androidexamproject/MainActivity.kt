@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     val fragment1 = CloudFragment()
     val fragment2 = DateFragment()
+    val fragment3 = BlankFragmentSelf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,11 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frameLayout,fragment2)
                         .commit()
+                R.id.share ->
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout,fragment3)
+                        .commit()
+
             }
             true
         }

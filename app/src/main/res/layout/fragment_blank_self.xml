@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BlankFragmentSelf">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView_Welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="感谢使用本APP" />
+
+        <TextView
+            android:id="@+id/textView_addarea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="增加天气备选地区"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/textView_del"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="删除地区"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/textView_changeDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="改变默认天气地区"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/textView_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="感谢支持" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/money" />
+
+    </LinearLayout>
+</FrameLayout>

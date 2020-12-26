@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivitySelectArea"></activity>
+        <activity android:name=".MainActivity_del"></activity>
+        <activity android:name=".MainActivity_changeDefault" />
+        <activity android:name=".MainActivitySelectArea" />
         <activity android:name=".MainActivity_add_area" />
         <activity android:name=".MainActivity">
             <intent-filter>

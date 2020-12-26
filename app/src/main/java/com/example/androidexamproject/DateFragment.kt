@@ -42,7 +42,7 @@ class DateFragment : Fragment() {
 
 
         var chooseDay = 0
-        textView_year.text = thisyear.toString()
+        textView_year.text = thisyear.toString()+"/"+ thismouth.toString()
 
 
         val recycle = view.findViewById<RecyclerView>(R.id.recyckerView_date)
