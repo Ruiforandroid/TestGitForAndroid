@@ -3,6 +3,7 @@ package com.example.androidexamproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Vibrator
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -41,6 +42,8 @@ class MainActivity_changeDefault : AppCompatActivity() {
             db.execSQL("update $TABLE_NAME_AREA set province= ?  where _id= ? ", arrayOf(info.get(position).province , 1))
             db.execSQL("update $TABLE_NAME_AREA set citycode= ?  where _id= ? ", arrayOf(info.get(position).city_code , 1))
             Log.d("CHANGEDEFAULT","success")
+            val vibrator = this.getSystemService(android.content.Context.VIBRATOR_SERVICE) as Vibrator
+            vibrator.vibrate(100)
             finish()
         }
 

@@ -3,6 +3,7 @@ package com.example.androidexamproject
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,14 +12,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main_add_area.*
+import kotlinx.android.synthetic.main.activity_main_add_area.view.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.Exception
+import java.lang.Thread.sleep
+import kotlin.concurrent.thread
 
 
 lateinit var adapter: MyRecyclerViewAdapter
@@ -31,6 +36,8 @@ var add_code = ""
 var count = 0
 var issuccess = true
 lateinit var add_city_code :String
+var positionthistime=100000
+var positionoldtime=100000
 
 class MainActivity_add_area : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +122,7 @@ class MainActivity_add_area : AppCompatActivity() {
             textView_add_city.text = add_city
 
             cursor = db.query(TABLE_NAME_CITY, null, null, null, null, null, null)
+            count++
             if (add_pro != "") {
                 if (add_code.length > 6 && issuccess) {
                     textView_add_province.text = add_pro
@@ -161,6 +169,7 @@ class MainActivity_add_area : AppCompatActivity() {
 
         button_sure.setOnClickListener {
             Log.d("add_info_citycode", add_code)
+
             if (add_city!=""){
                 val values = ContentValues().apply {
                     put("cityname", add_city)
@@ -225,6 +234,7 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView_cityname: TextView
         val textView_citycode: TextView
+        var ischoose:Boolean = false
 
         init {
             textView_cityname = view.findViewById(R.id.textView_cityame)
@@ -239,6 +249,8 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
         //以下实现点击事件
         val viewHolder = ViewHolder(view)
         viewHolder.textView_cityname.setOnClickListener {
+
+            viewHolder.textView_cityname.setBackgroundColor(Color.parseColor("#f34649"))
             val position = viewHolder.textView_citycode.text.toString()
             Toast.makeText(parent.context, "you click this $position", Toast.LENGTH_LONG).show()
 
@@ -246,6 +258,8 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
                 add_pro = viewHolder.textView_cityname.text.toString()
                 add_code = viewHolder.textView_citycode.text.toString()
                 Log.d("citychoose","成功选择省份")
+
+
             }else if (count==1){
                 add_shi = viewHolder.textView_cityname.text.toString()
                 add_code = viewHolder.textView_citycode.text.toString()
@@ -256,13 +270,19 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
                 add_city_code = add_code
                 Log.d("add_info_citycode", add_code)
             }
-            count++
+            thread {
+                sleep(300)
+                viewHolder.textView_cityname.setBackgroundColor(Color.parseColor("#ffffff"))
+            }
+
 
         }
         viewHolder.textView_citycode.setOnClickListener {
+
             val position = viewHolder.textView_citycode.text.toString()
             Log.d("position", "$position")
             Toast.makeText(parent.context, "you click this $position", Toast.LENGTH_SHORT).show()
+            viewHolder.textView_cityname.setTextColor(Color.parseColor("#f34649"))
             if (count == 0){
                 add_pro = viewHolder.textView_cityname.text.toString()
                 add_code = viewHolder.textView_citycode.text.toString()
@@ -273,12 +293,13 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
                 add_city = viewHolder.textView_cityname.text.toString()
                 add_code = viewHolder.textView_citycode.text.toString()
             }
-            count++
         }
         return ViewHolder(view)
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         cursor.moveToPosition(position)
+
+//        holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"))
         holder.textView_cityname.text = cursor.getString(cursor.getColumnIndex("cityname"))
         holder.textView_citycode.text = cursor.getString(cursor.getColumnIndex("citycode"))
     }
@@ -286,6 +307,12 @@ class MyRecyclerViewAdapter(var cursor: Cursor): RecyclerView.Adapter<MyRecycler
     override fun getItemCount(): Int {
         return cursor.count
     }
+
+    fun changgeall(holder: ViewHolder){
+        holder.itemView.setBackgroundColor(Color.parseColor("#111111"))
+
+    }
+
 
 
 }
